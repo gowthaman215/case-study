@@ -14,6 +14,16 @@
 #define MAX_LEN 3
 #define MAX_ID 10
 
+
+
+
+//enum boolean {true=1, false=0};
+typedef enum usertype 
+{
+	ADMIN=1, 
+	EMPLOYEE=2
+}usertype_t;
+
 //structures
 
 typedef struct date
@@ -41,6 +51,7 @@ typedef struct employee_details
 {
 	unsigned char emp_id[MAX_ID]; //auto generated
 	char emp_name[MAX_LEN]; 
+	char emp_password[MAX_LEN]; 
 	char emp_status; //Fully allocated , partially allocated, not allocated
 	char gender; 
 	unsigned long int basic_salary; 
@@ -66,7 +77,7 @@ int decrypt_password(char *encryptedpwstr, char *pwstr);
 int proc_emp_login();
 int proc_admin_login();
 int show_app_title();
-
+int validate_user(char* logon_user, char* logon_password, usertype_t user);	
 
 
 int add_employee();
@@ -79,8 +90,9 @@ int view_all_employees();
 int view_all_projects();
 int generate_emp_id(char* empid); //e1111111
 int generate_proj_id(char* empid); //p1111111
-
-
+int view_personal_details();
+int view_projects_details();
+int logout_emp_user();	
 
 #endif //_EMPPROJMGMT_H
 

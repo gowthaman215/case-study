@@ -46,3 +46,16 @@ int generate_proj_id(char* empid) //p1111111
 {
 
 }
+
+int view_personal_detailsi()
+{
+}
+
+int view_projects_details()
+{
+}
+
+int logout_emp_user()
+{
+}
+

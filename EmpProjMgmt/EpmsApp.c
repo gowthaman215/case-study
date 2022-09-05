@@ -29,8 +29,8 @@ int proc_login()
 	printf("\t\t\t\t\t3. Exit\n");
 
 	printf("\t\t\t\t\tYour choice ");
-	fflush(stdin);
 	scanf("%c",&choice);
+	fflush(stdin);
 
 	printf("\n\n");
 
@@ -39,16 +39,22 @@ int proc_login()
 
 		printf("\t\t\t\t\tAdmin Name : "); 
 		scanf("%s",logon_user);
+		fflush(stdin);
 		printf("\t\t\t\t\tAdmin Password  : "); 
 		scanf("%s",logon_password);
+		fflush(stdin);
+	        //validate_user(char* logon_user, char* logon_password, ADMIN);	
 		proc_admin_login();
 	}
 	else if (choice == '2')
 	{
 		printf("\t\t\t\t\tEmployee Name : "); 
 		scanf("%s",logon_user);
-		printf("\t\t\t\t\tEmployee Password  : "); 
+		fflush(stdin);
+		printf("\t\t\t\t\tEmployee Password  : ");
 		scanf("%s",logon_password);
+		fflush(stdin);
+	        //validate_user(char* logon_user, char* logon_password, EMPLOYEE);	
 		proc_emp_login();
 	}
 	else if(choice == '3')
@@ -67,26 +73,28 @@ int proc_login()
 
 int proc_admin_login()
 {
-	system("clear");
-	show_app_title();
 	
 	do
 	{      
+		system("clear");
+		show_app_title();
 		printf("\t\t\t\t\tLogon user [%s] \t\t\t User Type [ADMIN] \t\t\t Environment [DEVELOPMENT]\n",logon_user);
 		printf("\n\n");
 		printf("\t\t\t\t\tOptions\n\n");
 		printf("\t\t\t\t\t1. Add Employee\n");
 		printf("\t\t\t\t\t2. Delete Employee\n");
-		printf("\t\t\t\t\t3. Add Project\n");
-		printf("\t\t\t\t\t4. Delete Project\n");
-		printf("\t\t\t\t\t5. Allocate Project\n");
-		printf("\t\t\t\t\t6. logout\n");
+		printf("\t\t\t\t\t3. View Employee Details\n");
+		printf("\t\t\t\t\t4. Add Project\n");
+		printf("\t\t\t\t\t5. Delete Project\n");
+		printf("\t\t\t\t\t6. View Project Details\n");
+		printf("\t\t\t\t\t7. Allocate Project\n");
+		printf("\t\t\t\t\t8. logout\n");
 
 		printf("\t\t\t\t\tYour choice ");
 		
-		fflush(stdin);
-	        //choice = getchar();
+	        getchar();
 		scanf("%c",&choice);
+		fflush(stdin);
 
 		printf("\n\nchoice is %c", choice);
 
@@ -94,20 +102,27 @@ int proc_admin_login()
 		{
 			case '1':
 				add_employee();
+				
 				break;
 			case '2':
 				delete_employee();
 				break;
 			case '3':
-				add_project();
+				view_all_employees();
 				break;
 			case '4':
-				delete_project();
+				add_project();
 				break;
 			case '5':
-				allocate_project();
+				delete_project();
 				break;
 			case '6':
+				view_all_projects();
+				break;
+			case '7':
+				allocate_project();
+				break;
+			case '8':
 			        logout_admin_user();	
 				break;
 			default:
@@ -116,11 +131,48 @@ int proc_admin_login()
 
 		printf("\n\n");
 
-	}while(choice != '6');
+	}while(choice != '8');
 }
 
 int proc_emp_login()
 {
+	do
+	{      
+		system("clear");
+		show_app_title();
+		printf("\t\t\t\t\tLogon user [%s] \t\t\t User Type [EMPLOYEE] \t\t\t Environment [DEVELOPMENT]\n",logon_user);
+		printf("\n\n");
+		printf("\t\t\t\t\tOptions\n\n");
+		printf("\t\t\t\t\t1. View Personal Details\n");
+		printf("\t\t\t\t\t2. View Employment/Project Details\n");
+		printf("\t\t\t\t\t3. logout\n");
+
+		printf("\t\t\t\t\tYour choice ");
+	       
+	        getchar();	
+		scanf("%c",&choice);
+		fflush(stdin);
+
+		printf("\n\nchoice is %c", choice);
+
+		switch(choice)
+		{
+			case '1':
+				view_personal_details;
+				break;
+			case '2':
+				view_projects_details();
+				break;
+			case '3':
+			        logout_emp_user();	
+				break;
+			default:
+				printf("\t\t\t\t\tInvalid choice. please try again\n");
+		}
+
+		printf("\n\n");
+
+	}while(choice != '3');
 
 }
 
