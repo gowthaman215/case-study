@@ -93,17 +93,23 @@ int proc_admin_login()
 		switch(choice)
 		{
 			case '1':
-				printf("\t\t\t\t\t1. Add Employee\n"); break;
+				add_employee();
+				break;
 			case '2':
-				printf("\t\t\t\t\t2. Delete Employee\n"); break;
+				delete_employee();
+				break;
 			case '3':
-				printf("\t\t\t\t\t3. Add Project\n"); break;
+				add_project();
+				break;
 			case '4':
-				printf("\t\t\t\t\t4. Delete Project\n"); break;
+				delete_project();
+				break;
 			case '5':
-				printf("\t\t\t\t\t5. Allocate Project\n"); break;
+				allocate_project();
+				break;
 			case '6':
-				printf("\t\t\t\t\t6. logout\n"); break;
+			        logout_admin_user();	
+				break;
 			default:
 				printf("\t\t\t\t\tInvalid choice. please try again\n");
 		}
@@ -117,6 +123,7 @@ int proc_emp_login()
 {
 
 }
+
 
 int main()
 {

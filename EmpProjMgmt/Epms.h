@@ -12,6 +12,7 @@
 
 #define MAX_ALLOC 3
 #define MAX_LEN 3
+#define MAX_ID 10
 
 //structures
 
@@ -38,7 +39,7 @@ typedef struct project_details
 
 typedef struct employee_details
 {
-	unsigned int emp_id; //auto generated
+	unsigned char emp_id[MAX_ID]; //auto generated
 	char emp_name[MAX_LEN]; 
 	char emp_status; //Fully allocated , partially allocated, not allocated
 	char gender; 
@@ -50,7 +51,7 @@ typedef struct employee_details
 
 typedef struct allocation_info
 {
-	unsigned int project_id; 
+	unsigned char project_id[MAX_ID]; 
 	date_t allocation_start_date; 
 	date_t allocation_end_date; 
 	char role[MAX_LEN]; 
@@ -65,6 +66,21 @@ int decrypt_password(char *encryptedpwstr, char *pwstr);
 int proc_emp_login();
 int proc_admin_login();
 int show_app_title();
+
+
+
+int add_employee();
+int add_project();
+int delete_employee();
+int delete_project();
+int allocate_project();
+int logout_admin_user();
+int view_all_employees();
+int view_all_projects();
+int generate_emp_id(char* empid); //e1111111
+int generate_proj_id(char* empid); //p1111111
+
+
 
 #endif //_EMPPROJMGMT_H
 
