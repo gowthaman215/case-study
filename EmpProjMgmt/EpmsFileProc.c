@@ -8,8 +8,8 @@ int add_employee()
 	char confirm_pw[MAX_PW];
 
 	generate_emp_id(ed.emp_id);
+
 	printf("[New Record]\n");
-	strcpy(ed.emp_id,"e5585437");
 	printf("Employee ID      : %s\n", ed.emp_id);
 
 	printf("Employee Name    : "); read_string(ed.emp_name, MAX_NAME);
@@ -65,6 +65,7 @@ int view_all_projects()
 
 int generate_emp_id(char* empid) //e1111111
 {
+	strcpy(empid,"e5585437");
 
 }
 
