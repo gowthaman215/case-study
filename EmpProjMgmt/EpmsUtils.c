@@ -10,6 +10,11 @@ int read_string(char* str, int length)
 		scanf("%[^\n]%*c", str);
 		str = trim(str);
 	}
+	int len = strlen(str);
+	if (str[len-1] == '\n')
+	{
+		str[len-1] = '\0';
+	}
 	return 0;
 }
 

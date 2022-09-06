@@ -36,7 +36,24 @@ int add_employee()
 
 int add_project()
 {
-
+	project_details_t pd;
+	char confirm_pw[MAX_PW];
+	generate_proj_id(pd.proj_id);
+	printf("[New Record]\n");
+	printf("Project ID      : %s\n", pd.proj_id);
+	printf("Project Name   : "); read_string(pd.project_name, MAX_NAME);
+	printf("Enter day:FORMAT: DD  : "); scanf("%u", &pd.start_date.day);
+	printf("Enter day:FORMAT: MM  : "); scanf("%u", &pd.start_date.month);
+	printf("Enter day:FORMAT: YYYY  : "); scanf("%u", &pd.start_date.year);
+	printf("Number of resources required : "); scanf("%u", &pd.no_res_required);
+	printf("Number of resources alloted : "); scanf("%u", &pd.no_res_alloted);
+	printf("\n\n");
+	printf("Project ID      : %s\n", pd.proj_id);
+	printf("Project Name    : [%s]\n", pd.project_name);
+	printf("DATE         : %u/%u/%u\n", pd.start_date.day, pd.start_date.month, pd.start_date.year);
+	printf("Number of resources required  : [%u]\n", pd.no_res_required);
+	printf("Number of resources alloted  : [%u]\n", pd.no_res_required);
+	pause_on_keypress();
 }
 
 int delete_employee()
@@ -70,8 +87,9 @@ int generate_emp_id(char* empid) //e1111111
 }
 
 
-int generate_proj_id(char* empid) //p1111111
+int generate_proj_id(char* proj_id) //p1111111
 {
+	strcpy(proj_id,"p5585437");
 
 }
 

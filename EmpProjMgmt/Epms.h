@@ -44,7 +44,7 @@ typedef struct date
 
 typedef struct project_details
 {
-	unsigned int project_id;  //The project id is auto generated. 
+	unsigned char proj_id[MAX_ID]; //auto generated
 	char project_name[MAX_NAME]; 
 	date_t start_date; 
 	date_t end_date; //The end date should be atleast one month after the start date.
