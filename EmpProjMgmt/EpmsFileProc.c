@@ -4,6 +4,33 @@
 
 int add_employee()
 {
+	employee_details_t ed;
+	char confirm_pw[MAX_PW];
+
+	generate_emp_id(ed.emp_id);
+	printf("[New Record]\n");
+	strcpy(ed.emp_id,"e5585437");
+	printf("Employee ID      : %s\n", ed.emp_id);
+
+	printf("Employee Name    : "); read_string(ed.emp_name, MAX_NAME);
+	printf("Password         : "); read_string(ed.emp_password, MAX_PW);
+	printf("Confirm Password : "); read_string(confirm_pw, MAX_PW);
+	printf("Status           : "); ed.emp_status = read_char();
+	printf("Gender           : "); ed.gender = read_char();
+	printf("Basic Salary     : "); scanf("%ld", &ed.basic_salary);
+	printf("Bonus            : "); scanf("%ld", &ed.bonus);
+        
+	printf("\n\n");
+
+	printf("Employee Name    : [%s]\n", ed.emp_name);
+	printf("Password         : [%s]\n", ed.emp_password);
+	printf("Confirm Password : [%s]\n", confirm_pw);
+	printf("Status           : %c\n", ed.emp_status);
+	printf("Gender           : %c\n", ed.gender);
+	printf("Basic Salary     : %ld\n", ed.basic_salary);
+	printf("Bonus            : %ld\n", ed.bonus);
+	
+	pause_on_keypress();
 
 }
 

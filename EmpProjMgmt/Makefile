@@ -3,7 +3,7 @@ CC=gcc
 RM=rm -f
 CFLAGS=-I$(IDIR) -g
 
-SRCS= EpmsApp.c EpmsPwEncrypt.c EpmsFileProc.c 
+SRCS= EpmsApp.c EpmsPwEncrypt.c EpmsFileProc.c EpmsUtils.c 
 
 OBJS=$(subst .c,.o,$(SRCS))
 

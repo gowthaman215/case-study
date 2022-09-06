@@ -5,10 +5,10 @@
 #include "Epms.h"
 #include <unistd.h>
 
-char choice;
-char logon_user[10+1];
-char logon_password[10+1];
+char logon_user[MAX_ID];
+char logon_password[MAX_PW];
 int return_code;
+
 
 int show_app_title()
 {
@@ -18,10 +18,21 @@ int show_app_title()
 	printf("\n\n");
 }
 
-int proc_login()
+int read_user_credential()
 {
 
+	printf("\t\t\t\t\tUser ID : "); 
+	scanf("%s",logon_user);
+	printf("\t\t\t\t\tPassword: "); 
+	SetStdinEcho(0);
+	scanf("%s", logon_password);
+	SetStdinEcho(1);
+}
 
+int proc_login()
+{
+        char choice;
+	system("clear");
 	show_app_title();
 	printf("\t\t\t\t\tLogin Application\n\n");
 	printf("\t\t\t\t\t1. Admin\n");
@@ -29,53 +40,76 @@ int proc_login()
 	printf("\t\t\t\t\t3. Exit\n");
 
 	printf("\t\t\t\t\tYour choice ");
-	scanf("%c",&choice);
-	fflush(stdin);
+	//scanf("%c%*c",&choice);
+	choice = read_char();
 
 	printf("\n\n");
 
 	if(choice == '1')
 	{        
-
-		printf("\t\t\t\t\tAdmin Name : "); 
-		scanf("%s",logon_user);
-		fflush(stdin);
-		printf("\t\t\t\t\tAdmin Password  : "); 
-		scanf("%s",logon_password);
-		fflush(stdin);
-	        //validate_user(char* logon_user, char* logon_password, ADMIN);	
+                read_user_credential();
+		return_code = validate_user(logon_user, logon_password, ADMIN);
+		if(return_code != 0)
+		{ 
+			printf("\n\n");
+			printf("\t\t\t\t\tInvalid credential");
+			pause_on_keypress();
+			return INVALID_CREDENTIAL;
+		}
+	        	
 		proc_admin_login();
 	}
 	else if (choice == '2')
 	{
-		printf("\t\t\t\t\tEmployee Name : "); 
-		scanf("%s",logon_user);
-		fflush(stdin);
-		printf("\t\t\t\t\tEmployee Password  : ");
-		scanf("%s",logon_password);
-		fflush(stdin);
-	        //validate_user(char* logon_user, char* logon_password, EMPLOYEE);	
+	     
+                read_user_credential();
+		return_code = validate_user(logon_user, logon_password, EMPLOYEE);
+		if(return_code != 0)
+		{ 
+			printf("\n\n");
+			printf("\t\t\t\t\tInvalid credential");
+			pause_on_keypress();
+			return INVALID_CREDENTIAL;
+		}
+
 		proc_emp_login();
 	}
 	else if(choice == '3')
 	{
-		return 3;	
+		return USER_EXIT;	
 	}
 	else
-	{ 
+	{
 		printf("\t\t\t\t\tInvalid Choice\n\n");
+		pause_on_keypress();
 
 	}
 
-        choice = ' ';
 
+}
+
+int validate_user(char* logon_user, char* logon_password, usertype_t user_type)
+{
+	if(user_type == ADMIN)
+	{
+		if (strcmp(logon_user,ADMIN_ID) == 0 && strcmp(logon_password,ADMIN_PW) == 0)
+			return SUCCESS;
+		else
+			return INVALID_CREDENTIAL; 
+
+	}
+	else
+	{
+
+	}
 }
 
 int proc_admin_login()
 {
 	
-	do
+        while(1)	
 	{      
+		char choice;
 		system("clear");
 		show_app_title();
 		printf("\t\t\t\t\tLogon user [%s] \t\t\t User Type [ADMIN] \t\t\t Environment [DEVELOPMENT]\n",logon_user);
@@ -91,18 +125,15 @@ int proc_admin_login()
 		printf("\t\t\t\t\t8. logout\n");
 
 		printf("\t\t\t\t\tYour choice ");
+		//scanf("%*c%c%*c",&choice);
+		choice = read_char();
+
+		printf("\n\n");
 		
-	        getchar();
-		scanf("%c",&choice);
-		fflush(stdin);
-
-		printf("\n\nchoice is %c", choice);
-
 		switch(choice)
 		{
 			case '1':
 				add_employee();
-				
 				break;
 			case '2':
 				delete_employee();
@@ -124,18 +155,19 @@ int proc_admin_login()
 				break;
 			case '8':
 			        logout_admin_user();	
-				break;
+				return USER_LOGOUT;
 			default:
 				printf("\t\t\t\t\tInvalid choice. please try again\n");
+				pause_on_keypress();
 		}
 
-		printf("\n\n");
-
-	}while(choice != '8');
+	}
 }
 
 int proc_emp_login()
 {
+	char choice;
+
 	do
 	{      
 		system("clear");
@@ -149,9 +181,8 @@ int proc_emp_login()
 
 		printf("\t\t\t\t\tYour choice ");
 	       
-	        getchar();	
-		scanf("%c",&choice);
-		fflush(stdin);
+		//scanf("%c",&choice);
+		choice = read_char();
 
 		printf("\n\nchoice is %c", choice);
 
@@ -181,10 +212,9 @@ int main()
 {
 	while(1)
 	{      
-	        system("clear");	
 		return_code = proc_login();
 
-		if(return_code == 3)
+		if(return_code == USER_EXIT)
 		{
 			printf("\t\t\t\t\tUser has Exited Application\n\n");
 			break;

@@ -1,3 +1,4 @@
 EpmsApp.o: EpmsApp.c Epms.h
 EpmsPwEncrypt.o: EpmsPwEncrypt.c
 EpmsFileProc.o: EpmsFileProc.c Epms.h
+EpmsUtils.o: EpmsUtils.c Epms.h
