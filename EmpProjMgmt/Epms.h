@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
 #include <stdbool.h>
 
 #define MAX_PROJECT 3
@@ -44,7 +45,8 @@ typedef struct date
 
 typedef struct project_details
 {
-	unsigned char proj_id[MAX_ID]; //auto generated
+	//unsigned char proj_id[MAX_ID]; //auto generated
+	int proj_id; //auto generated
 	char project_name[MAX_NAME]; 
 	date_t start_date; 
 	date_t end_date; //The end date should be atleast one month after the start date.
@@ -114,7 +116,7 @@ int logout_emp_user();
 
 //unique id generating functions
 int generate_emp_id(char* empid); //e1111111
-int generate_proj_id(char* empid); //p1111111
+int generate_proj_id(); //p1111111
 
 // Utility functions
 char pause_on_keypress();
