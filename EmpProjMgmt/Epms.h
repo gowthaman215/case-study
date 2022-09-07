@@ -88,26 +88,42 @@ int show_app_title();
 int validate_user(char* logon_user, char* logon_password, usertype_t user);	
 int read_user_credential();
 
-
+// Admin Operations
+int add_admin();
+int delete_admin();
 int add_employee();
-int add_project();
+int modify_employee();
 int delete_employee();
-int delete_project();
-int allocate_project();
-int logout_admin_user();
 int view_all_employees();
+int add_project();
+int modify_project();
+int delete_project();
 int view_all_projects();
-int generate_emp_id(char* empid); //e1111111
-int generate_proj_id(char* empid); //p1111111
+int allocate_project();
+int deallocate_project();
+int change_password();
+int logout_admin_user();
+
+//Employee Operation
 int view_personal_details();
 int view_projects_details();
-int logout_emp_user();	
+int update_personal_details();
+int update_projects_details();
+int change_emp_password();	
+int logout_emp_user();
+
+//unique id generating functions
+int generate_emp_id(char* empid); //e1111111
+int generate_proj_id(char* empid); //p1111111
+
+// Utility functions
 char pause_on_keypress();
 char read_char();
 int read_string(char* str, int length);
 char *ltrim(char *s);
 char *rtrim(char *s);
 char *trim(char *s);
+
 
 #endif //_EMPPROJMGMT_H
 

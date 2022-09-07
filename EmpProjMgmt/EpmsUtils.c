@@ -3,12 +3,12 @@
 
 int read_string(char* str, int length)
 {
+	memset(str, '\0', length);
 	fgets(str, length, stdin);
 	if(str[0] == '\n')
 	{
 		//fgets(str, length, stdin);
 		scanf("%[^\n]%*c", str);
-		str = trim(str);
 	}
 	int len = strlen(str);
 	if (str[len-1] == '\n')

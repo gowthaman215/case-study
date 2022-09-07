@@ -2,6 +2,16 @@
 
 // this is for file processing
 
+int add_admin()
+{
+
+}
+
+int delete_admin()
+{
+
+}
+
 int add_employee()
 {
 	employee_details_t ed;
@@ -29,9 +39,24 @@ int add_employee()
 	printf("Gender           : %c\n", ed.gender);
 	printf("Basic Salary     : %ld\n", ed.basic_salary);
 	printf("Bonus            : %ld\n", ed.bonus);
+
+	
 	
 	pause_on_keypress();
 
+}
+
+int modify_employee()
+{
+
+}
+
+int delete_employee()
+{
+}
+
+int view_all_employees()
+{
 }
 
 int add_project()
@@ -56,11 +81,16 @@ int add_project()
 	pause_on_keypress();
 }
 
-int delete_employee()
+int modify_project()
 {
+
 }
 
 int delete_project()
+{
+}
+
+int view_all_projects()
 {
 }
 
@@ -68,15 +98,45 @@ int allocate_project()
 {
 }
 
+int deallocate_project()
+{
+
+}
+
+int change_password()
+{
+
+}
+
 int logout_admin_user()
 {
 }
 
-int view_all_employees()
+
+int view_personal_details()
 {
 }
 
-int view_all_projects()
+int view_projects_details()
+{
+}
+
+int update_personal_details()
+{
+
+}
+
+int update_projects_details()
+{
+
+}
+
+int change_emp_password()
+{
+
+}
+
+int logout_emp_user()
 {
 }
 
@@ -93,15 +153,4 @@ int generate_proj_id(char* proj_id) //p1111111
 
 }
 
-int view_personal_detailsi()
-{
-}
-
-int view_projects_details()
-{
-}
-
-int logout_emp_user()
-{
-}
 
