@@ -108,10 +108,10 @@ int validate_user(char* logon_user, char* logon_password, usertype_t user_type)
 int proc_admin_login()
 {
 	
-	char choice[2+1];
+	int choice;
         while(1)	
 	{     
-	        memset(choice,'\0',sizeof(choice));	
+	      //  memset(choice,'\0',sizeof(choice));	
 		system("clear");
 		show_app_title();
 		printf("\tLogon user [%s] \t\t\t\t User Type [ADMIN] \t\t\t\t Environment [DEVELOPMENT]\n",logon_user);
@@ -126,97 +126,105 @@ int proc_admin_login()
 		printf("\t\t\t\t\t7. Add New Project\n");
 		printf("\t\t\t\t\t8. Modify Project Details\n");
 		printf("\t\t\t\t\t9. Delete Project\n");
-		printf("\t\t\t\t\t10. View Project Details\n");
+		printf("\t\t\t\t\t10. List All Projects\n");
 		printf("\t\t\t\t\t11. Allocate Employee to Project\n");
 		printf("\t\t\t\t\t12. Deallocate Employee from Project\n"); 
 		printf("\t\t\t\t\t13. Change Password\n");
-		printf("\t\t\t\t\t14. Logout\n");
+		printf("\t\t\t\t\t14. View projects based on id\n");
+		printf("\t\t\t\t\t15. Logout\n");
 		
 		printf("\t\t\t\t\tYour choice? ");
-		read_string(choice,2);
+		scanf("%d", &choice);
 
 		printf("\n\n");
 
-		if(strcmp(choice, "1") == 0)
+		if(choice == 1)
 		{
 			//1. Add New Admin
 			add_admin();
 		}
-		else if (strcmp(choice, "2") == 0)
+		else if (choice == 2)
 		{
 			//2. Delete Admin
 			delete_admin();
 		}
-		else if (strcmp(choice, "3") == 0)
+		else if (choice == 3)
 		{
 			//3. Add New Employee
 			add_employee();
 
 
 		}
-		else if (strcmp(choice, "4") == 0)
+		else if (choice == 4)
 		{
 			//4. Modify Employee Details
 			modify_employee();
 
 		}
-		else if (strcmp(choice, "5") == 0)
+		else if (choice == 5)
 		{
 			//5. Delete Employee
 			delete_employee();
 
 		}
-		else if (strcmp(choice, "6") == 0)
+		else if (choice == 6)
 		{
 			//6. View Employee Details
 			view_all_employees();
 
 		}
-		else if (strcmp(choice, "7") == 0)
+		else if (choice == 7)
 		{
 			//7. Add New Project
 			add_project();
 
 		}
-		else if (strcmp(choice, "8") == 0)
+		else if (choice == 8)
 		{
 			//8. Modify Project Details
 			modify_project();
 
 		}
-		else if (strcmp(choice, "9") == 0)
+		else if (choice == 9)
 		{
 			//9. Delete Project
 			delete_project();
 
 		}
-		else if (strcmp(choice, "10") == 0)
+		else if (choice == 10)
 		{
 			//10. View Project Details
 			view_all_projects();
 
 		}
-		else if (strcmp(choice, "11") == 0)
+		else if (choice == 11)
 		{
 			//11. Allocate Employee to Project
 			allocate_project();
 
 		}
-		else if (strcmp(choice, "12") == 0)
+		else if (choice == 12)
 		{
 			//12. Deallocate Employee from Project
 			deallocate_project();
 
 		}
-		else if (strcmp(choice, "13") == 0)
+		else if (choice == 13)
 		{
 			//13. Change Password
 			change_password();
 
 		}
-		else if (strcmp(choice, "14") == 0)
+		else if (choice == 14)
 		{
-			//14. Logout
+			//14. View projects based on id
+			printf("Entering into functions");
+			view_projects_details();
+
+		}
+		else if (choice == 15)
+		{
+			//15. Logout
 			logout_admin_user();	
 			return USER_LOGOUT;
 
@@ -228,38 +236,6 @@ int proc_admin_login()
 
 		}
 		
-		/*
-		switch(choice)
-		{
-			case '1':
-				add_employee();
-				break;
-			case '2':
-				delete_employee();
-				break;
-			case '3':
-				view_all_employees();
-				break;
-			case '4':
-				add_project();
-				break;
-			case '5':
-				delete_project();
-				break;
-			case '6':
-				view_all_projects();
-				break;
-			case '7':
-				allocate_project();
-				break;
-			case '8':
-			        logout_admin_user();	
-				return USER_LOGOUT;
-			default:
-				printf("\t\t\t\t\tInvalid choice. please try again\n");
-				pause_on_keypress();
-		}*/
-
 	}
 }
 

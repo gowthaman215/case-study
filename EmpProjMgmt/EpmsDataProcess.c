@@ -108,7 +108,6 @@ int delete_project()
 
 int view_all_projects()
 {
-	printf("Development under progress\n");
 	FILE *fp1;
 	fp1 = fopen ("project.dat", "r");
 	if (fp1 == NULL) {
@@ -150,6 +149,34 @@ int view_personal_details()
 
 int view_projects_details()
 {
+	int pid;
+	printf("Enter project ID:\n");
+	scanf("%d", &pid);
+	FILE *fp1;
+	fp1 = fopen ("project.dat", "r");
+	if (fp1 == NULL) {
+		printf("\nError opened file\n");
+		exit (1);
+	}
+	project_details_t pd1;
+	int pid_flag = 0;
+	
+	while(fread(&pd1, sizeof(project_details_t), 1, fp1))
+	{
+		if (pd1.proj_id == pid) {
+			printf ("proj_id|proj_name|start_date|res_reqired|res_allocated|\n");
+			printf ("%d|%s|%u-%u-%u|%u|%u|\n", pd1.proj_id, pd1.project_name,pd1.start_date.day,pd1.start_date.month,pd1.start_date.year,pd1.no_res_required,pd1.no_res_alloted);
+			pid_flag = 1;
+		}
+	}
+
+	if (!pid_flag)
+	{
+		printf("Project details not found for id :%d\n", pid);
+	}
+	
+	fclose (fp1);
+	pause_on_keypress();
 }
 
 int update_personal_details()
@@ -177,8 +204,7 @@ int generate_emp_id(char* empid) //e1111111
 
 }
 
-
-int generate_proj_id() //p1111111
+int generate_proj_id() //1234567890 (ten digit number)
 {
 	srand(time(0));
 	int id = rand();
