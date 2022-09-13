@@ -376,11 +376,117 @@ int add_project()
 
 int modify_project()
 {
+	char ch;
+	int found = 0;
+        project_details_t pd;
+        project_details_t ted;
 
+
+        FILE *fp;
+
+        fp = fopen ("./datafile/Project-Details.DAT", "r+");
+        if (fp == NULL) {
+                printf("\nError opened file\n");
+                exit (1);
+        }
+
+
+        printf("[Modify Record]\n");
+        printf("Project ID      : "); read_string(ted.proj_id, MAX_ID,0);
+
+        fseek(fp, 0, SEEK_SET);
+        while(fread(&pd, sizeof(project_details_t), 1, fp))
+        {
+                if(strcmp(ted.proj_id, pd.proj_id) == 0 )
+                {
+                        found = 1;
+                        break;
+                }
+
+        }
+
+        if(found)
+        {
+
+		printf("Project Name   : "); read_string(ted.project_name, MAX_NAME,1);
+		printf("Enter project start date:\n");
+		printf("Enter day:FORMAT: DD  : "); scanf("%u", &ted.start_date.day);
+		printf("Enter month:FORMAT: MM  : "); scanf("%u", &ted.start_date.month);
+		printf("Enter year:FORMAT: YYYY  : "); scanf("%u", &ted.start_date.year);
+		printf("Enter project end date:\n");
+		printf("Enter day:FORMAT: DD  : "); scanf("%u", &ted.end_date.day);
+		printf("Enter month:FORMAT: MM  : "); scanf("%u", &ted.end_date.month);
+		printf("Enter year:FORMAT: YYYY  : "); scanf("%u", &ted.end_date.year);
+		printf("Number of resources required : "); scanf("%u", &ted.no_res_required);
+		printf("Number of resources alloted : "); scanf("%u", &ted.no_res_alloted);
+
+                fseek(fp, -1 * sizeof(project_details_t), SEEK_CUR);
+
+                //Write data into the file
+                fwrite (&ted, sizeof(project_details_t), 1, fp);
+
+                printf("\n\n");
+
+                printf("Project Record has been modified successfully.\n");
+        }
+        else
+        {
+                printf("No Project Record Found\n");
+        }
+
+        fclose(fp);
+
+        //write_sequence_file();
+        pause_on_keypress();
 }
 
 int delete_project()
 {
+	        char ch;
+        int found = 0;
+        project_details_t pd;
+        project_details_t ted;
+        char empid[MAX_ID];
+
+        FILE *fp, *fpt;
+
+        fp = fopen ("./datafile/Project-Details.DAT", "r+");
+        if (fp == NULL) {
+                printf("\nError opened file\n");
+                exit (1);
+        }
+
+        fpt = fopen ("./datafile/Project-Details.TMP", "w");
+        if (fp == NULL) {
+                printf("\nError opening temp file\n");
+                exit (1);
+        }
+
+        printf("[Delete Record]\n");
+        printf("Project ID      : "); read_string(ted.proj_id, MAX_ID,0);
+
+        fseek(fp, 0, SEEK_SET);
+       while(fread(&pd, sizeof(project_details_t), 1, fp))
+        {
+                if(strcmp(ted.proj_id, pd.proj_id) != 0 )
+                {
+                        fwrite (&pd, sizeof(project_details_t), 1, fpt);
+                }
+
+        }
+
+
+        printf("\n\n");
+        printf("Project Record has been modified successfully.\n");
+
+        fclose(fpt);
+        fclose(fp);
+
+        remove("./datafile/Employee-Details.DAT");
+        rename("./datafile/Project-Details.TMP", "./datafile/Project-Details.DAT");
+
+        //write_sequence_file();
+        pause_on_keypress();
 }
 
 int view_all_projects()
