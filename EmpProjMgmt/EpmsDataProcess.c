@@ -344,11 +344,19 @@ int add_project()
 	{
 		generate_proj_id(pd.proj_id);
 		printf("[New Record]\n");
-		printf("Project ID      : %s\n", g_nxt_projid_seq_str);
+		//printf("Project ID      : %s\n", g_nxt_projid_seq_str);
 		printf("Project ID      : %s\n", pd.proj_id);
 		printf("Project Name   : "); read_string(pd.project_name, MAX_NAME,1);
+		printf("Enter project start date:\n");
+		printf("Enter day:FORMAT: DD  : "); scanf("%u", &pd.start_date.day);
+		printf("Enter month:FORMAT: MM  : "); scanf("%u", &pd.start_date.month);
+		printf("Enter year:FORMAT: YYYY  : "); scanf("%u", &pd.start_date.year);
+		printf("Enter project end date:\n");
+		printf("Enter day:FORMAT: DD  : "); scanf("%u", &pd.end_date.day);
+		printf("Enter month:FORMAT: MM  : "); scanf("%u", &pd.end_date.month);
+		printf("Enter year:FORMAT: YYYY  : "); scanf("%u", &pd.end_date.year);
 		printf("Number of resources required : "); scanf("%u", &pd.no_res_required);
-		//printf("Number of resources alloted : "); scanf("%u", &pd.no_res_alloted);
+		printf("Number of resources alloted : "); scanf("%u", &pd.no_res_alloted);
 	
 		//Write data into the file
 		fwrite (&pd, sizeof(project_details_t), 1, fp);
@@ -377,9 +385,8 @@ int delete_project()
 
 int view_all_projects()
 {
-	printf("Development under progress\n");
 	FILE *fp1;
-	fp1 = fopen ("project.dat", "r");
+	fp1 = fopen ("./datafile/Project-Details.DAT", "r");
 	if (fp1 == NULL) {
 		printf("\nError opened file\n");
 		exit (1);
@@ -388,7 +395,7 @@ int view_all_projects()
 	printf ("proj_id|proj_name|start_date|res_reqired|res_allocated|\n");
 	
 	while(fread(&pd1, sizeof(project_details_t), 1, fp1))
-		printf ("%s|%s|%u-%u-%u|%u|%u|\n", pd1.proj_id, pd1.project_name,pd1.start_date.day,pd1.start_date.month,pd1.start_date.year,pd1.no_res_required,pd1.no_res_alloted);
+		printf ("%s|%s|%u-%u-%u|%u-%u-%u|%u|%u|\n", pd1.proj_id, pd1.project_name,pd1.start_date.day,pd1.start_date.month,pd1.start_date.year,pd1.end_date.day, pd1.end_date.month, pd1.end_date.year, pd1.no_res_required,pd1.no_res_alloted);
 	
 	fclose (fp1);
 	pause_on_keypress();
