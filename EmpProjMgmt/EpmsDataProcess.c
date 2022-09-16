@@ -482,10 +482,10 @@ int delete_project()
         fclose(fpt);
         fclose(fp);
 
-        remove("./datafile/Employee-Details.DAT");
+        remove("./datafile/Project-Details.DAT");
         rename("./datafile/Project-Details.TMP", "./datafile/Project-Details.DAT");
 
-        //write_sequence_file();
+        write_sequence_file();
         pause_on_keypress();
 }
 
@@ -575,19 +575,16 @@ int load_sequence_file()
         FILE *fp;
 	fp = fopen ("./datafile/Sequence.dat", "r");
 	if (fp == NULL) {
-		g_nxt_empid_seq=g_nxt_projid_seq=1111111;
-        }
-	else
-	{
+		g_nxt_empid_seq = 1111111;
+		g_nxt_projid_seq = 1111111;
+        } else {
 		rewind(fp);
 		memset(g_nxt_empid_seq_str,'\0',sizeof(g_nxt_empid_seq_str));
 		memset(g_nxt_projid_seq_str,'\0',sizeof(g_nxt_projid_seq_str));
-		fscanf(fp,"%s %s",g_nxt_empid_seq_str,g_nxt_projid_seq_str);
+		fscanf(fp,"%s %s", g_nxt_empid_seq_str, g_nxt_projid_seq_str);
 		g_nxt_empid_seq = atoi(g_nxt_empid_seq_str);
-		g_nxt_projid_seq = atoi (g_nxt_projid_seq_str);
-		printf("%d , %d", g_nxt_empid_seq, g_nxt_projid_seq);
+		g_nxt_projid_seq = atoi(g_nxt_projid_seq_str);
 		fclose(fp);
-
 	}
 	return 0;
 
@@ -604,7 +601,7 @@ int write_sequence_file()
         }
 	else
 	{
-		fprintf(fp,"%d,%d",g_nxt_empid_seq,g_nxt_projid_seq);
+		fprintf(fp,"%d %d",g_nxt_empid_seq,g_nxt_projid_seq);
 		fclose(fp);
 	}
 	return 0;
