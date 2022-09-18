@@ -25,6 +25,9 @@
 #define USER_LOGOUT 1001
 #define INVALID_CREDENTIAL 1002
 
+#define max_yr 9999
+#define min_yr 1800
+
 
 int g_nxt_empid_seq;
 int g_nxt_projid_seq;

@@ -132,7 +132,7 @@ int proc_admin_login()
 	        memset(choice,'\0',sizeof(choice));	
 		system("clear");
 		show_app_title();
-		printf("\tLogon user [%s] \t\t\t\t User Type [ADMIN] \t\t\t\t Environment [DEVELOPMENT]\n",logon_user);
+		printf("\tLogon user [%s] \t\t\t User Type [ADMIN] \t\t\t Environment [DEVELOPMENT]\n",logon_user);
 		printf("\n\n");
 		printf("\t\t\t\t\tOptions\n\n");
 		printf("\t\t\t\t\t1. Add New Admin\n");
@@ -144,12 +144,12 @@ int proc_admin_login()
 		printf("\t\t\t\t\t7. View Employee Details\n");
 		printf("\t\t\t\t\t8. Add New Project\n");
 		printf("\t\t\t\t\t9. Modify Project Details\n");
-		printf("\t\t\t\t\t10 Delete Project\n");
-		printf("\t\t\t\t\t11. View Project Details\n");
-		printf("\t\t\t\t\t12. Allocate Employee to Project\n");
-		printf("\t\t\t\t\t13. Deallocate Employee from Project\n"); 
-		printf("\t\t\t\t\t14. Change Password\n");
-		printf("\t\t\t\t\t15. Logout\n");
+		printf("\t\t\t\t\t10.Delete Project\n");
+		printf("\t\t\t\t\t11.View Project Details\n");
+		printf("\t\t\t\t\t12.Allocate Employee to Project\n");
+		printf("\t\t\t\t\t13.Deallocate Employee from Project\n"); 
+		printf("\t\t\t\t\t14.Change Password\n");
+		printf("\t\t\t\t\t15.Logout\n");
 		
 		printf("\t\t\t\t\tYour choice? ");
 		read_string(choice,3,0);
@@ -297,7 +297,7 @@ int proc_emp_login()
 	{      
 		system("clear");
 		show_app_title();
-		printf("\tLogon user [%s] \t\t\t\t User Type [EMPLOYEE] \t\t\t\t Environment [DEVELOPMENT]\n",logon_user);
+		printf("\tLogon user [%s] \t\t\t User Type [EMPLOYEE] \t\t\t Environment [DEVELOPMENT]\n",logon_user);
 		printf("\n\n");
 		printf("\t\t\t\t\tOptions\n\n");
 		printf("\t\t\t\t\t1. View Personal Details\n");
