@@ -360,9 +360,8 @@ int getDifference(date_t dt1, date_t dt2)
 		n2 += countLeapYears(dt2);
 	return (n2 - n1);
 }
-
 int datevalid(int d, int m, int y) {
-	printf("day:%d, month:%d, year:%d\n\n", d, m, y);
+//	printf("Day:%d, Month:%d, Year:%d\n", d, m, y);
    if(y < min_yr || y > max_yr)
       return 0;
    if(m < 1 || m > 12)
@@ -385,14 +384,14 @@ int datevalid(int d, int m, int y) {
          else
             return 0;
             return 1;
-}
-
+   }
 int add_project()
 {
 	FILE *fp;
-	char ch, c;
-	int date_val;
+	char ch, c, cr;
+	int date_val, dv;
 	int diff = 0;
+	int char_flag = 0;
 	project_details_t pd;
 	fp = fopen ("./datafile/Project-Details.DAT", "a");
         if (fp == NULL) {
@@ -406,44 +405,72 @@ int add_project()
 		printf("\t\t\t\t\t[New Record]\n");
 		printf("\t\t\t\t\tProject ID      : %s\n", pd.proj_id);
 		printf("\t\t\t\t\tProject Name   : "); read_string(pd.project_name, MAX_NAME,1);
+
 		do {
+			char_flag = 0;
 			printf("\t\t\t\t\tEnter project start date (DD/MM/YYYY format):\n");
-			scanf("%u/%u/%u", &pd.start_date.day, &pd.start_date.month, &pd.start_date.year);
-			c = getchar();
-
-			date_val = datevalid(pd.start_date.day, pd.start_date.month, pd.start_date.year);
-			if(!date_val) {
-				printf("\t\t\t\t\tstart date is not valid\n");
+			dv = scanf("%u/%u/%u", &pd.start_date.day, &pd.start_date.month, &pd.start_date.year);
+			while((c = getchar()) != '\n' && c != EOF)
+			{
+				char_flag = 1;
 			}
 
-		} while (!date_val);
+			if (dv == 3) {
+				date_val = datevalid(pd.start_date.day, pd.start_date.month, pd.start_date.year);
+			} else {
+				date_val = 0;
+			}
+
+			if ( (!date_val) || (dv != 3) || (char_flag != 0) )
+			{
+				printf("\t\t\t\t\tStart date is not valid\n");
+			}
+
+		} while ((!date_val) || (dv != 3) || (char_flag != 0));
+
 		do {
+			char_flag = 0;
 			printf("\t\t\t\t\tEnter project end date (DD/MM/YYYY format):\n");
-			scanf("%u/%u/%u", &pd.end_date.day, &pd.end_date.month, &pd.end_date.year);
-			date_val = datevalid(pd.end_date.day, pd.end_date.month, pd.end_date.year);
-			if(!date_val)
-				printf("\t\t\t\t\tend date is not valid\n");
-			else {
-				diff = getDifference(pd.start_date, pd.end_date);
-				if (diff < 30) {
-					printf("\t\t\t\t\tEnd date shoul1d be after 30 days\n");
+			dv = scanf("%u/%u/%u", &pd.end_date.day, &pd.end_date.month, &pd.end_date.year);
+			while((cr = getchar()) != '\n' && cr != EOF)
+			{
+				char_flag = 1;
 
-				}
 			}
-		} while ((!date_val) || (diff < 30));
+			if (dv == 3) {
+				date_val = datevalid(pd.end_date.day, pd.end_date.month, pd.end_date.year);
+				diff = getDifference(pd.start_date, pd.end_date);
+			} else {
+				date_val = 0;
+			}
+
+			if ( (!date_val) || (dv != 3) || (char_flag != 0) )
+			{
+				printf("\t\t\t\t\tEnd date is not valid\n");
+			} else if (diff < 30) {
+				printf("\t\t\t\t\tEnd date should be after 30 days\n");
+			}
+		} while ((!date_val) || (dv != 3) || (char_flag != 0) || (diff < 30));
 		printf("\t\t\t\t\tNumber of resources required : "); scanf("%u", &pd.no_res_required);
-		printf("\t\t\t\t\tNumber of resources alloted : "); scanf("%u", &pd.no_res_alloted);
-	
+		do {
+			printf("\t\t\t\t\tNumber of resources alloted : "); scanf("%u", &pd.no_res_alloted);
+			if (pd.no_res_alloted > pd.no_res_required)
+			{
+				printf("\t\t\t\t\tno_res_alloted should be less than or equal to no_res_required\n");
+			}
+		} while(pd.no_res_alloted > pd.no_res_required);
+		
 		//Write data into the file
 		fwrite (&pd, sizeof(project_details_t), 1, fp);
 
 		printf("\n\n");
 		printf("Add New? [Y|N] "); ch = read_char();
+		printf("char:%c\n", ch);
 		printf("\n\n");
 
-	}while(ch == 'Y');
+	}while((ch == 'Y') || (ch == 'y'));
         
-        printf("Project Record(s) has been added successfully.\n");
+        printf("Project Record(s) added successfully.\n");
 
         fclose(fp);
 	write_sequence_file();
