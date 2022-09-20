@@ -488,8 +488,11 @@ int add_project()
 
 int modify_project()
 {
-	char ch;
 	int found = 0;
+	char ch, c, cr;
+	int date_val, dv;
+	int diff = 0;
+	int char_flag = 0;
         project_details_t pd;
         project_details_t ted;
 
@@ -502,8 +505,8 @@ int modify_project()
                 exit (1);
         }
 
-        printf("[Modify Record]\n");
-        printf("Project ID      : "); read_string(ted.proj_id, MAX_ID,0);
+        printf("\t\t\t\t\t[Modify Record]\n");
+        printf("\t\t\t\t\tProject ID      : "); read_string(ted.proj_id, MAX_ID,0);
 
         fseek(fp, 0, SEEK_SET);
         while(fread(&pd, sizeof(project_details_t), 1, fp))
@@ -519,17 +522,65 @@ int modify_project()
         if(found)
         {
 
-		printf("Project Name   : "); read_string(ted.project_name, MAX_NAME,1);
-		printf("Enter project start date:\n");
-		printf("Enter day:FORMAT: DD  : "); scanf("%u", &ted.start_date.day);
-		printf("Enter month:FORMAT: MM  : "); scanf("%u", &ted.start_date.month);
-		printf("Enter year:FORMAT: YYYY  : "); scanf("%u", &ted.start_date.year);
-		printf("Enter project end date:\n");
-		printf("Enter day:FORMAT: DD  : "); scanf("%u", &ted.end_date.day);
-		printf("Enter month:FORMAT: MM  : "); scanf("%u", &ted.end_date.month);
-		printf("Enter year:FORMAT: YYYY  : "); scanf("%u", &ted.end_date.year);
-		printf("Number of resources required : "); scanf("%u", &ted.no_res_required);
-		printf("Number of resources alloted : "); scanf("%u", &ted.no_res_alloted);
+		printf("\t\t\t\t\tProject Name   : "); read_string(ted.project_name, MAX_NAME,1);
+		do {
+			char_flag = 0;
+			printf("\t\t\t\t\tEnter project start date (DD/MM/YYYY format):\n");
+			printf("\t\t\t\t\t");
+			dv = scanf("%u/%u/%u", &ted.start_date.day, &ted.start_date.month, &ted.start_date.year);
+			while((c = getchar()) != '\n' && c != EOF)
+			{
+				char_flag = 1;
+			}
+
+			if (dv == 3) {
+				date_val = datevalid(ted.start_date.day, ted.start_date.month, ted.start_date.year);
+			} else {
+				date_val = 0;
+			}
+
+			if ( (!date_val) || (dv != 3) || (char_flag != 0) )
+			{
+				printf("\t\t\t\t\tStart date is not valid\n");
+			}
+
+		} while ((!date_val) || (dv != 3) || (char_flag != 0));
+		do {
+			char_flag = 0;
+			printf("\t\t\t\t\tEnter project end date (DD/MM/YYYY format):\n");
+			printf("\t\t\t\t\t");
+			dv = scanf("%u/%u/%u", &ted.end_date.day, &ted.end_date.month, &ted.end_date.year);
+			while((cr = getchar()) != '\n' && cr != EOF)
+			{
+				char_flag = 1;
+
+			}
+			if (dv == 3) {
+				date_val = datevalid(ted.end_date.day, ted.end_date.month, ted.end_date.year);
+				diff = getDifference(ted.start_date, ted.end_date);
+			} else {
+				date_val = 0;
+			}
+
+			if ( (!date_val) || (dv != 3) || (char_flag != 0) )
+			{
+				printf("\t\t\t\t\tEnd date is not valid\n");
+			} else if (diff < 30) {
+				printf("\t\t\t\t\tEnd date should be after 30 days\n");
+			}
+		} while ((!date_val) || (dv != 3) || (char_flag != 0) || (diff < 30));
+		printf("\t\t\t\t\tNumber of resources required :\n");
+		printf("\t\t\t\t\t");
+		scanf("%u", &ted.no_res_required);
+		do {
+			printf("\t\t\t\t\tNumber of resources alloted : \n");
+			printf("\t\t\t\t\t");
+			scanf("%u", &ted.no_res_alloted);
+			if (ted.no_res_alloted > ted.no_res_required)
+			{
+				printf("\t\t\t\t\tno_res_alloted should be less than or equal to no_res_required\n");
+			}
+		} while(ted.no_res_alloted > ted.no_res_required);
 
                 fseek(fp, -1 * sizeof(project_details_t), SEEK_CUR);
 
@@ -538,11 +589,11 @@ int modify_project()
 
                 printf("\n\n");
 
-                printf("Project Record has been modified successfully.\n");
+                printf("\t\t\t\t\tProject details updated successfully.\n");
         }
         else
         {
-                printf("No Project Record Found\n");
+                printf("\t\t\t\t\tNo Project Record Found\n");
         }
 
         fclose(fp);
@@ -553,7 +604,7 @@ int modify_project()
 
 int delete_project()
 {
-	        char ch;
+	char ch;
         int found = 0;
         project_details_t pd;
         project_details_t ted;
@@ -573,22 +624,29 @@ int delete_project()
                 exit (1);
         }
 
-        printf("[Delete Record]\n");
-        printf("Project ID      : "); read_string(ted.proj_id, MAX_ID,0);
+        printf("\t\t\t\t\t[Delete Record]\n");
+        printf("\t\t\t\t\tProject ID      : "); read_string(ted.proj_id, MAX_ID,0);
 
         fseek(fp, 0, SEEK_SET);
-       while(fread(&pd, sizeof(project_details_t), 1, fp))
+        while(fread(&pd, sizeof(project_details_t), 1, fp))
         {
                 if(strcmp(ted.proj_id, pd.proj_id) != 0 )
                 {
                         fwrite (&pd, sizeof(project_details_t), 1, fpt);
-                }
+                } else {
+			found = 1;
+
+		}
 
         }
 
 
         printf("\n\n");
-        printf("Project Record has been modified successfully.\n");
+	if (found) {
+		printf("\t\t\t\t\tProject deleted successfully.\n");
+	} else {
+                printf("\t\t\t\t\tNo project record found.\n");
+	}
 
         fclose(fpt);
         fclose(fp);
@@ -611,10 +669,10 @@ int view_all_projects()
 	}
 	project_details_t pd1;
 
-	printf ("proj_id|proj_name|start_date|res_reqired|res_allocated|\n");
+	printf ("\t\t\t\t\t|proj_id|proj_name|start_date|res_reqired|res_allocated|\n");
 	
 	while(fread(&pd1, sizeof(project_details_t), 1, fp1))
-		printf ("%s|%s|%u-%u-%u|%u-%u-%u|%u|%u|\n", pd1.proj_id, pd1.project_name,pd1.start_date.day,pd1.start_date.month,pd1.start_date.year,pd1.end_date.day, pd1.end_date.month, pd1.end_date.year, pd1.no_res_required,pd1.no_res_alloted);
+		printf ("\t\t\t\t\t|%s|%s|%u-%u-%u|%u-%u-%u|%u|%u|\n", pd1.proj_id, pd1.project_name,pd1.start_date.day,pd1.start_date.month,pd1.start_date.year,pd1.end_date.day, pd1.end_date.month, pd1.end_date.year, pd1.no_res_required,pd1.no_res_alloted);
 	
 	fclose (fp1);
 	pause_on_keypress();
