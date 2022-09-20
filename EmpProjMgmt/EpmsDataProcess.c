@@ -179,7 +179,8 @@ int add_employee()
         fwrite (&ed, sizeof(employee_details_t), 1, fp);
 	
 	printf("\n\n");
-	printf("Add New? [Y|N] "); ch = read_char();
+	printf("Add New? [Y|N] ");
+	ch = read_char();
 	printf("\n\n");
 	}while(ch == 'Y');
 	
@@ -409,6 +410,7 @@ int add_project()
 		do {
 			char_flag = 0;
 			printf("\t\t\t\t\tEnter project start date (DD/MM/YYYY format):\n");
+			printf("\t\t\t\t\t");
 			dv = scanf("%u/%u/%u", &pd.start_date.day, &pd.start_date.month, &pd.start_date.year);
 			while((c = getchar()) != '\n' && c != EOF)
 			{
@@ -431,6 +433,7 @@ int add_project()
 		do {
 			char_flag = 0;
 			printf("\t\t\t\t\tEnter project end date (DD/MM/YYYY format):\n");
+			printf("\t\t\t\t\t");
 			dv = scanf("%u/%u/%u", &pd.end_date.day, &pd.end_date.month, &pd.end_date.year);
 			while((cr = getchar()) != '\n' && cr != EOF)
 			{
@@ -451,9 +454,13 @@ int add_project()
 				printf("\t\t\t\t\tEnd date should be after 30 days\n");
 			}
 		} while ((!date_val) || (dv != 3) || (char_flag != 0) || (diff < 30));
-		printf("\t\t\t\t\tNumber of resources required : "); scanf("%u", &pd.no_res_required);
+		printf("\t\t\t\t\tNumber of resources required :\n");
+		printf("\t\t\t\t\t");
+		scanf("%u", &pd.no_res_required);
 		do {
-			printf("\t\t\t\t\tNumber of resources alloted : "); scanf("%u", &pd.no_res_alloted);
+			printf("\t\t\t\t\tNumber of resources alloted : \n");
+			printf("\t\t\t\t\t");
+			scanf("%u", &pd.no_res_alloted);
 			if (pd.no_res_alloted > pd.no_res_required)
 			{
 				printf("\t\t\t\t\tno_res_alloted should be less than or equal to no_res_required\n");
@@ -464,13 +471,15 @@ int add_project()
 		fwrite (&pd, sizeof(project_details_t), 1, fp);
 
 		printf("\n\n");
-		printf("Add New? [Y|N] "); ch = read_char();
-		printf("char:%c\n", ch);
+		printf("\t\t\t\t\t");
+		printf("Add New? [Y|N] \n");
+		printf("\t\t\t\t\t");
+		ch = read_char();
 		printf("\n\n");
 
 	}while((ch == 'Y') || (ch == 'y'));
         
-        printf("Project Record(s) added successfully.\n");
+        printf("\t\t\t\t\tProject Record(s) added successfully.\n");
 
         fclose(fp);
 	write_sequence_file();
@@ -492,7 +501,6 @@ int modify_project()
                 printf("\nError opened file\n");
                 exit (1);
         }
-
 
         printf("[Modify Record]\n");
         printf("Project ID      : "); read_string(ted.proj_id, MAX_ID,0);
@@ -592,6 +600,7 @@ int delete_project()
         pause_on_keypress();
 }
 
+
 int view_all_projects()
 {
 	FILE *fp1;
@@ -601,6 +610,7 @@ int view_all_projects()
 		exit (1);
 	}
 	project_details_t pd1;
+
 	printf ("proj_id|proj_name|start_date|res_reqired|res_allocated|\n");
 	
 	while(fread(&pd1, sizeof(project_details_t), 1, fp1))
