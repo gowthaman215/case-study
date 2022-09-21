@@ -111,14 +111,13 @@ int validate_user(char* logon_user, char* logon_password, usertype_t user_type)
 {
 	if(user_type == ADMIN)
 	{
-		if (strcmp(logon_user,ADMIN_ID) == 0 && strcmp(logon_password,ADMIN_PW) == 0)
+		if (strcmp(logon_user, ADMIN_ID) == 0 && strcmp(logon_password, ADMIN_PW) == 0)
 			return SUCCESS;
 		else
 			return INVALID_CREDENTIAL; 
 
-	}
-	else
-	{
+	} else {
+		printf("\t\t\t\t\tUser type is not admin\n");
 
 	}
 }

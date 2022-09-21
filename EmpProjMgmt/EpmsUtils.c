@@ -4,6 +4,7 @@
 int read_string(char* str, int length, int allowspace)
 {
 	int len;
+	//printf("XXXXXXXXX:%s:%d:%d\n", str, length, allowspace);
 
 	while(1)
 	{
@@ -53,7 +54,7 @@ char read_char()
 char pause_on_keypress()
 {
 	char ch;
-	scanf("%c%*c",&ch);
+	scanf("%c",&ch);
 	return ch;
 }
 

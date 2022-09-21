@@ -8,6 +8,7 @@ int add_admin()
 	char admin_pw[MAX_PW];
 	char confirm_pw[MAX_PW];
         FILE *fp;
+	/*
         
 	fp = fopen ("./datafile/Admin-Details.DAT", "a");
         if (fp == NULL) {
@@ -47,7 +48,8 @@ int add_admin()
 
 	}
         printf("\n\n");
-	printf("Admin user created\n");
+	printf("Admin user created\n");*/
+	printf("\t\t\t\t\tUnder development\n");
 	pause_on_keypress();
 
 }
@@ -58,6 +60,7 @@ int view_admin()
 	FILE *fp;
 	char admin_id[MAX_ID];
 	char admin_pw[MAX_PW];
+	/*
 
 	fp = fopen ("./datafile/Admin-Details.DAT", "r");
 	if (fp == NULL) {
@@ -76,7 +79,8 @@ int view_admin()
 		fgets(admin_pw,MAX_PW + 1,fp);
 	}	
 
-	fclose (fp);
+	fclose (fp);*/
+	printf("\t\t\t\t\tUnder development\n");
 	pause_on_keypress();
 }
 
@@ -88,7 +92,7 @@ int delete_admin()
 	char line[20];
 	char admin_pw[MAX_PW];
 	
-        FILE *fp, *fpt;
+    /*    FILE *fp, *fpt;
         
 	fp = fopen ("./datafile/Admin-Details.DAT", "r+");
         if (fp == NULL) {
@@ -124,14 +128,15 @@ int delete_admin()
 	remove("./datafile/Admin-Details.DAT");
         rename("./datafile/Admin-Details.TMP", "./datafile/Admin-Details.DAT");	
 	
-	//write_sequence_file();
+	//write_sequence_file();*/
+	printf("\t\t\t\t\tUnder development\n");
 	pause_on_keypress();
-
 }
 
 int add_employee()
 {
-	char ch;
+	char ch, c, cr;
+	int char_flag = 0;
 	employee_details_t ed;
 	char confirm_pw[MAX_PW];
         FILE *fp;
@@ -146,21 +151,59 @@ int add_employee()
 	{
 	generate_emp_id(ed.emp_id);
 
-	printf("[New Record]\n");
-	printf("Employee ID      : %s\n", ed.emp_id);
-	printf("Employee Name    : "); read_string(ed.emp_name, MAX_NAME,1);
+	printf("\t\t\t\t\t[New Record]\n");
+	printf("\t\t\t\t\tEmployee ID      : %s\n", ed.emp_id);
+	printf("\t\t\t\t\tEmployee Name    : ");
+	read_string(ed.emp_name, MAX_NAME,1);
 	ed.emp_status = 'U'; //F - Fully Allocated, P - Partly Allocated , U - Unallocated
-	printf("Gender           : "); ed.gender = toupper(read_char());
-	printf("Basic Salary     : "); scanf("%ld", &ed.basic_salary);
-	printf("Bonus            : "); scanf("%ld", &ed.bonus);
+	do {
+		char_flag = 0;
+	printf("\t\t\t\t\tGender[M/F]       : ");
+	ed.gender = toupper(read_char());
+	while((c = getchar()) != '\n' && c != EOF)
+	{
+		char_flag = 1;
+	}
+	if ((char_flag != 0) || !(ed.gender == 'M' || ed.gender == 'm' ||  ed.gender == 'F' ||  ed.gender == 'f' ))
+	{
+		printf("\t\t\t\t\tEnter valid gender\n");
+	}
+	} while ((char_flag != 0) || !(ed.gender == 'M' || ed.gender == 'm' ||  ed.gender == 'F' ||  ed.gender == 'f' ));
+	do {	
+		char_flag = 0;
+	printf("\t\t\t\t\tBasic Salary     : ");
+	scanf("%ld", &ed.basic_salary);
+	while((c = getchar()) != '\n' && c != EOF)
+	{
+		char_flag = 1;
+	}
+	if (char_flag == 1)
+	{
+		printf("\t\t\t\t\tEnter valid salary\n");
+	}
+	} while(char_flag != 0);
+	do {
+		char_flag = 0;
+	printf("\t\t\t\t\tBonus            : ");
+	scanf("%ld", &ed.bonus);
+	while((c = getchar()) != '\n' && c != EOF)
+	{
+		char_flag = 1;
+	}
+	if (char_flag == 1)
+	{
+		printf("\t\t\t\t\tEnter valid bonus\n");
+	}
+	} while (char_flag != 0);
+	//while((c = getchar()) != '\n' && c != EOF);
         
         do{	
-		printf("Password         : "); 
+		printf("\t\t\t\t\tPassword         :"); 
 		SetStdinEcho(0);
-		read_string(ed.emp_password, MAX_PW,0);
+		read_string(ed.emp_password, MAX_PW, 0);
 		SetStdinEcho(1);
                 printf("\n");
-		printf("Confirm Password : "); 
+		printf("\t\t\t\t\tConfirm Password : "); 
 		SetStdinEcho(0);
 		read_string(confirm_pw, MAX_PW,0);
 		SetStdinEcho(1);
@@ -168,7 +211,7 @@ int add_employee()
 
 		if(strcmp (ed.emp_password, confirm_pw) != 0)
 		{
-			printf("Password and Confirm Password not matching.. Try Again..\n\n");
+			printf("\t\t\t\t\tPassword and Confirm Password not matching.. Try Again..\n\n");
 		}
 
 	}while (strcmp (ed.emp_password, confirm_pw) != 0);
@@ -179,12 +222,13 @@ int add_employee()
         fwrite (&ed, sizeof(employee_details_t), 1, fp);
 	
 	printf("\n\n");
-	printf("Add New? [Y|N] ");
+	printf("\t\t\t\t\tAdd New? [Y|N] ");
 	ch = read_char();
 	printf("\n\n");
-	}while(ch == 'Y');
+	while((c = getchar()) != '\n' && c != EOF);
+	}while((ch == 'Y') || (ch == 'y'));
 	
-        printf("Employee Record(s) has been added successfully.\n");
+        printf("\t\t\t\t\tEmployee Record(s) has been added successfully.\n");
 	fclose(fp);
 	
 	write_sequence_file();
@@ -195,7 +239,8 @@ int add_employee()
 int modify_employee()
 {
 
-	char ch;
+	char ch, c, cr;
+	int char_flag = 0;
 	int found = 0;
 	employee_details_t ed;
 	employee_details_t ted;
@@ -210,8 +255,8 @@ int modify_employee()
         }
 
 
-	printf("[Modify Record]\n");
-	printf("Employee ID      : "); read_string(ted.emp_id, MAX_ID,0);
+	printf("\t\t\t\t\t[Modify Record]\n");
+	printf("\t\t\t\t\tEmployee ID      : "); read_string(ted.emp_id, MAX_ID,0);
 
 	fseek(fp, 0, SEEK_SET);
 	while(fread(&ed, sizeof(employee_details_t), 1, fp))
@@ -227,11 +272,58 @@ int modify_employee()
 	if(found)
 	{
 
-		printf("Employee Name    : "); read_string(ted.emp_name, MAX_NAME,1);
-		printf("Status           : "); ted.emp_status = read_char();
-		printf("Gender           : "); ted.gender = read_char();
-		printf("Basic Salary     : "); scanf("%ld", &ted.basic_salary);
-		printf("Bonus            : "); scanf("%ld", &ted.bonus);
+		printf("\t\t\t\t\tEmployee Name    : "); read_string(ted.emp_name, MAX_NAME,1);
+		do {
+			char_flag = 0;
+			printf("\t\t\t\t\tStatus[F/P/U]      : "); ted.emp_status = read_char();
+			while((c = getchar()) != '\n' && c != EOF)
+			{
+				char_flag = 1;
+			}
+			if ((char_flag != 0) || !(ted.emp_status == 'F' || ted.emp_status == 'f' ||  ted.emp_status == 'P' || ted.emp_status == 'p'  || ted.emp_status == 'U' ||  ted.emp_status == 'u' ))
+			{
+				printf("\t\t\t\t\tEnter valid employee status\n");
+			}
+		} while ((char_flag != 0) || !(ted.emp_status == 'F' || ted.emp_status == 'f' ||  ted.emp_status == 'P' ||  ted.emp_status == 'p'  || ted.emp_status == 'U' ||  ted.emp_status == 'u' ));
+		do {
+			char_flag = 0;
+			printf("\t\t\t\t\tGender[M/F]       : ");
+			ted.gender = toupper(read_char());
+			while((c = getchar()) != '\n' && c != EOF)
+			{
+				char_flag = 1;
+			}
+			if ((char_flag != 0) || !(ted.gender == 'M' || ted.gender == 'm' || ted.gender == 'F' ||  ted.gender == 'f' ))
+			{
+				printf("\t\t\t\t\tEnter valid gender\n");
+			}
+	} while ((char_flag != 0) || !(ted.gender == 'M' || ted.gender == 'm' ||  ted.gender == 'F' ||  ted.gender == 'f' ));
+	do {	
+		char_flag = 0;
+	printf("\t\t\t\t\tBasic Salary     : ");
+	scanf("%ld", &ted.basic_salary);
+	while((c = getchar()) != '\n' && c != EOF)
+	{
+		char_flag = 1;
+	}
+	if (char_flag == 1)
+	{
+		printf("\t\t\t\t\tEnter valid salary\n");
+	}
+	} while(char_flag != 0);
+	do {
+		char_flag = 0;
+	printf("\t\t\t\t\tBonus            : ");
+	scanf("%ld", &ted.bonus);
+	while((c = getchar()) != '\n' && c != EOF)
+	{
+		char_flag = 1;
+	}
+	if (char_flag == 1)
+	{
+		printf("\t\t\t\t\tEnter valid bonus\n");
+	}
+	} while (char_flag != 0);
 
 		fseek(fp, -1 * sizeof(employee_details_t), SEEK_CUR);
 
@@ -240,11 +332,11 @@ int modify_employee()
 
 		printf("\n\n");
 
-		printf("Employee Record has been modified successfully.\n");
+		printf("\t\t\t\t\tEmployee Record has been modified successfully.\n");
 	}
 	else
 	{
-		printf("No Employee Record Found\n");
+		printf("\t\t\t\t\tNo Employee Record Found\n");
 	}
 	
 	fclose(fp);
@@ -276,8 +368,8 @@ int delete_employee()
                 exit (1);
         }
 
-	printf("[Delete Record]\n");
-	printf("Employee ID      : "); read_string(ted.emp_id, MAX_ID,0);
+	printf("\t\t\t\t\t[Delete Record]\n");
+	printf("\t\t\t\t\tEmployee ID      : "); read_string(ted.emp_id, MAX_ID,0);
 
 	fseek(fp, 0, SEEK_SET);
 	while(fread(&ed, sizeof(employee_details_t), 1, fp))
@@ -285,13 +377,19 @@ int delete_employee()
 		if(strcmp(ted.emp_id, ed.emp_id) != 0 )
 		{
 			fwrite (&ed, sizeof(employee_details_t), 1, fpt);
+		} else {
+			found = 1;
 		}
 		
 	}
 
 	
 	printf("\n\n");
-	printf("Employee Record has been modified successfully.\n");
+	if (found) {
+	printf("\t\t\t\t\tEmployee Record has been deleted successfully.\n");
+	} else {
+	printf("\t\t\t\t\tEmployee Record not found\n");
+	}
 	
 	fclose(fpt);
 	fclose(fp);
@@ -315,14 +413,14 @@ int view_all_employees()
 	}
         
  	printf ("All Employee Details...\n\n");
- 	printf ("Employee ID    Employee Name                               Status    Gender    Basic Salary                  Bonus\n");
-	printf ("===========    ========================================    ======    ======    =========================     =========================\n");
+ 	printf ("Employee ID    Employee Name                        Status    Gender    Basic Salary            Bonus\n");
+	printf ("===========    =================================    ======    ======    =================    ===========\n");
 
 
         fseek(fp, 0, SEEK_SET);      	
 	while(fread(&ed, sizeof(employee_details_t), 1, fp))
 	{	
-		printf ("%11s    %-40s    %6c    %6c    %25ld    %25ld\n", ed.emp_id, ed.emp_name, ed.emp_status, ed.gender, ed.basic_salary, ed.bonus);
+		printf ("%-11s    %-33s    %-6c    %-6c    %-17ld    %-12ld\n", ed.emp_id, ed.emp_name, ed.emp_status, ed.gender, ed.basic_salary, ed.bonus);
 	}
 
 	fclose (fp);
@@ -405,7 +503,8 @@ int add_project()
 		generate_proj_id(pd.proj_id);
 		printf("\t\t\t\t\t[New Record]\n");
 		printf("\t\t\t\t\tProject ID      : %s\n", pd.proj_id);
-		printf("\t\t\t\t\tProject Name   : "); read_string(pd.project_name, MAX_NAME,1);
+		printf("\t\t\t\t\tProject Name   : ");
+		read_string(pd.project_name, MAX_NAME,1);
 
 		do {
 			char_flag = 0;
@@ -669,10 +768,12 @@ int view_all_projects()
 	}
 	project_details_t pd1;
 
-	printf ("\t\t\t\t\t|proj_id|proj_name|start_date|res_reqired|res_allocated|\n");
+ 	printf ("All Project Details...\n\n");
+ 	printf ("Project ID    Project Name                    Start Date    End Date    Resource Req    Resource Alloc\n");
+	printf ("===========   ============================    ==========    =========   ============    ===============\n");
 	
 	while(fread(&pd1, sizeof(project_details_t), 1, fp1))
-		printf ("\t\t\t\t\t|%s|%s|%u-%u-%u|%u-%u-%u|%u|%u|\n", pd1.proj_id, pd1.project_name,pd1.start_date.day,pd1.start_date.month,pd1.start_date.year,pd1.end_date.day, pd1.end_date.month, pd1.end_date.year, pd1.no_res_required,pd1.no_res_alloted);
+		printf ("%-11s   %-28s    %-2u-%-2u-%-2u    %-2u-%-2u-%-2u   %-12u    %-15u\n", pd1.proj_id, pd1.project_name,pd1.start_date.day,pd1.start_date.month,pd1.start_date.year,pd1.end_date.day, pd1.end_date.month, pd1.end_date.year, pd1.no_res_required,pd1.no_res_alloted);
 	
 	fclose (fp1);
 	pause_on_keypress();
@@ -680,15 +781,20 @@ int view_all_projects()
 
 int allocate_project()
 {
+	printf("\t\t\t\t\tUnder development\n");
+	pause_on_keypress();
 }
 
 int deallocate_project()
 {
-
+	printf("\t\t\t\t\tUnder development\n");
+	pause_on_keypress();
 }
 
 int change_password()
 {
+	printf("\t\t\t\t\tUnder development\n");
+	pause_on_keypress();
 
 }
 
